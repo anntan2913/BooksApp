@@ -37,9 +37,15 @@
             
             image.addEventListener('dblclick', function(event){
                 event.preventDefault();
-                image.classList.add('favorite');
                 const bookId = image.getAttribute('data-id');
-                favoriteBooks.push(bookId);
+
+                if(favoriteBooks.indexOf(bookId) == -1){
+                    image.classList.add('favorite');                
+                    favoriteBooks.push(bookId);
+                } else {
+                    image.classList.remove('favorite');
+                    favoriteBooks.pop(bookId);
+                }
                 console.log('Favorite Books', favoriteBooks);
             });            
         }
