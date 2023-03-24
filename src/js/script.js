@@ -18,12 +18,14 @@
 
     function render() {      
 
-        for(const book of dataSource.books) {                  
+        for(const book of dataSource.books) { 
+            const ratingBgc = determineRatingBgc(book.rating);
+            const ratingWidth = book.rating * 10; // to percentage rate
+            book.ratingBgc = ratingBgc;
+            book.ratingWidth = ratingWidth;                 
             const generatedHTML = templates.book(book);
             const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-            booksList.appendChild(generatedDOM); 
-            const ratingBgc = determineRatingBgc(book.rating);
-            const ratingWidth = (book.rating / 10) * 100; // to percentage rate
+            booksList.appendChild(generatedDOM);             
         }
     }
     
@@ -35,7 +37,7 @@
         //const booksImages = booksList.querySelectorAll('.book__image'); 
         const bookForm = document.querySelector('.filters');
         
-        //for(let image of booksImages) {              // e. ('image' click) => event.target.offsetParent
+        //for(let image of booksImages) {     // e. ('image' click) => event.target.offsetParent
             
         booksList.addEventListener('dblclick', function(event){ 
             event.preventDefault(); 
@@ -79,16 +81,16 @@
                 if(!book.details[filter]) {
                     shouldBeHidden = true;
                     break;
-                }                         
-                //tipp: .book__image[data-id="id-of-the-book-here"] jak w blogu-check it!
-                const bookImg = document.querySelector('.book__image[data-id="' + book.id + '"]');
-                console.log('Book Id', book.id);   
-                if(shouldBeHidden == true){
-                    bookImg.classList.add('hidden');
-                } else {                
-                    bookImg.classList.remove('hidden');
-                } console.log('bookImg', bookImg);
-            }                   
+                }
+            }                             
+            //tipp: .book__image[data-id="id-of-the-book-here"] jak w blogu-check it!
+            const bookImg = document.querySelector('.book__image[data-id="' + book.id + '"]');
+            console.log('Book Id', book.id);   
+            if(shouldBeHidden == true){
+                bookImg.classList.add('hidden');
+            } else {                
+                bookImg.classList.remove('hidden');
+            } console.log('bookImg', bookImg);                            
         }
     }
 
